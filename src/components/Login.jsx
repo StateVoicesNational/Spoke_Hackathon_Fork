@@ -37,6 +37,11 @@ class Login extends React.Component {
       ...theme.text.header,
       "text-align": "center",
       "margin-bottom": 0
+    },
+    entryButtons: {
+      color: "white",
+      backgroundColor: 'green',
+      boxShadow: '1px 2px 4px lightgreen'
     }
   });
 
@@ -104,19 +109,19 @@ class Login extends React.Component {
           {true && ( // displaySignUp
             <ButtonGroup fullWidth>
               <Button
-                color="default"
                 variant="contained"
                 onClick={() => this.handleClick("login")}
                 disabled={this.state.active === "login"}
+                className={this.state.active === "login" && css(this.styles.entryButtons)}
               >
                 Log In
               </Button>
               <Button
-                color="default"
                 variant="contained"
                 name="signup"
                 onClick={() => this.handleClick("signup")}
                 disabled={this.state.active === "signup"}
+                className={this.state.active === "signup" && css(this.styles.entryButtons)}
               >
                 Sign Up
               </Button>

@@ -101,7 +101,7 @@ class Home extends React.Component {
         </div>
         <div>
           <Link id="login" href="/login" onClick={this.handleOrgInviteClick}>
-            Login and get started
+            Login and get started 
           </Link>
         </div>
       </div>
