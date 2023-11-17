@@ -772,6 +772,54 @@ async function addNumberToMessagingService(
 /**
  * Buy a phone number and add it to the owned_phone_number table
  */
+async function getShortCode(
+  organization,
+  twilioInstance,
+  opts = {},
+  messageServiceSid
+) {
+  const response = await twilioInstance.shortCodes.list({});
+  if (response.error) {
+    throw new Error(`Error collecting ShortCode: ${response.error}`);
+  }
+
+  log.debug(`Bought number [${response.sid}]`);
+
+  let allocationFields = {};
+  if (opts) {
+    if (opts.messagingServiceSid) {
+      messagingServiceSid = opts.messagingServiceSid;
+    } else if (opts.skipOrgMessageService) {
+      messagingServiceSid = null;
+    }
+  }
+
+  if (messagingServiceSid) {
+    await addNumberToMessagingService(
+      twilioInstance,
+      response.sid,
+      messagingServiceSid
+    );
+    allocationFields = {
+      allocated_to: "messaging_service",
+      allocated_to_id: messagingServiceSid,
+      allocated_at: new Date()
+    };
+  }
+  // Note: relies on the fact that twilio returns E. 164 formatted numbers
+  //  and only works in the US
+  return await r.knex("owned_phone_number").insert({
+    organization_id: organization.id,
+    phone_number: phoneNumber,
+    service: "twilio",
+    service_id: response.sid,
+    ...allocationFields
+  });
+}
+
+/**
+ * Buy a phone number and add it to the owned_phone_number table
+ */
 async function buyNumber(
   organization,
   twilioInstance,
