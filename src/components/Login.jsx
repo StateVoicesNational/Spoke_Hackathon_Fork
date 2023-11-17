@@ -41,7 +41,7 @@ class Login extends React.Component {
     entryButtons: {
       color: "white",
       backgroundColor: 'green',
-      boxShadow: '1px 2px 4px lightgreen'
+      boxShadow: '1px 2px 4px lightgreen',
     }
   });
 
