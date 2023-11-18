@@ -1,7 +1,14 @@
 [![Build Status](https://travis-ci.org/MoveOnOrg/Spoke.svg?branch=main)](https://travis-ci.org/MoveOnOrg/Spoke)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v1.4%20adopted-ff69b4.svg)](CODE_OF_CONDUCT.md)
 
-# Spoke
+# StateVoices Hack-a-thon Staging Branch
+
+This branch is where our People's Engineers are pouring their technical eyes to secure the successful completion of our technical priorities.
+
+Appreciations:
+- ADD DEVELOPER NAMES HERE & GITHUB HANDLES
+
+## Spoke
 
 Spoke is an open source text-distribution tool for organizations to mobilize supporters and members into action. Spoke allows you to upload phone numbers, customize scripts and assign volunteers to communicate with supporters while allowing organizations to manage the process.
 
