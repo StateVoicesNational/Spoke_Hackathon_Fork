@@ -69,7 +69,7 @@ export const postCanvassResponse = async (contact, organization, bodyInput) => {
 
   if (contact.cell) {
     const phoneCountry = process.env.PHONE_NUMBER_COUNTRY || "US";
-
+    // target this
     body.canvassContext.phone = {
       dialingPrefix: getCountryCode(contact.cell, phoneCountry).toString(),
       phoneNumber: getDashedPhoneNumberDisplay(contact.cell, phoneCountry)
