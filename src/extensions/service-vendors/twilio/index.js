@@ -1253,6 +1253,7 @@ export default {
   getTwilio,
   getServiceConfig,
   getMessageServiceSid,
+  getShortCode,
   messageServiceLink,
   updateConfig,
   getMetadata,
