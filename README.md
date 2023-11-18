@@ -18,7 +18,7 @@ Github Workflow
 
 Appreciations:
 
-- ADD DEVELOPER NAMES HERE & GITHUB HANDLES
+- ADD DEVELOPER NAMES HERE & GITHUB HANDLES.
 
 ## Spoke
 
