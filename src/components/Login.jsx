@@ -29,14 +29,20 @@ class Login extends React.Component {
     loginPage: {
       display: "flex",
       "justify-content": "center",
-      "align-items": "flex-start",
-      height: "100vh",
+      "flexDirection": "column",
+      "align-items": "center",
+      "minHeight": "100vh",
       "padding-top": "10vh"
     },
     header: {
       ...theme.text.header,
       "text-align": "center",
-      "margin-bottom": 0
+      "margin-bottom": 20
+    },
+    entryButtons: {
+      color: "white",
+      backgroundColor: 'green',
+      boxShadow: '1px 2px 4px lightgreen',
     }
   });
 
@@ -95,19 +101,23 @@ class Login extends React.Component {
       login: "Log In",
       signup: "Sign Up",
       reset: "Save New Password"
-    };
-
-    return (
+    }; 
+      
+      return(
       <div className={css(this.styles.loginPage)}>
+         <div className={css(this.styles.header)}>
+          Spoke is a new way to run campaigns using text messaging.
+        </div>
         <div>
           {/* Only display sign up option if there is a nextUrl */}
           {true && ( // displaySignUp
             <ButtonGroup fullWidth>
               <Button
-                color="default"
+                // color="default"
                 variant="contained"
                 onClick={() => this.handleClick("login")}
                 disabled={this.state.active === "login"}
+                className={this.state.active === "login" && css(this.styles.entryButtons)}
               >
                 Log In
               </Button>
@@ -117,6 +127,7 @@ class Login extends React.Component {
                 name="signup"
                 onClick={() => this.handleClick("signup")}
                 disabled={this.state.active === "signup"}
+                className={this.state.active === "signup" && css(this.styles.entryButtons)}
               >
                 Sign Up
               </Button>
