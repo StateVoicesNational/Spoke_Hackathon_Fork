@@ -5,6 +5,7 @@ import {
   getDashedPhoneNumberDisplay
 } from "../../lib/phone-format";
 import httpRequest from "../../server/lib/http-request.js";
+import { cacheableData } from "../../../server/models";
 
 export const name = "ngpvan-action";
 
@@ -70,11 +71,17 @@ export const postCanvassResponse = async (contact, organization, bodyInput) => {
   if (contact.cell) {
     const phoneCountry = process.env.PHONE_NUMBER_COUNTRY || "US";
     // target this
+    console.log("postCanvassResponse-contact", contact)
+    console.log('cacheable data', cacheableData)
     body.canvassContext.phone = {
       dialingPrefix: getCountryCode(contact.cell, phoneCountry).toString(),
-      phoneNumber: getDashedPhoneNumberDisplay(contact.cell, phoneCountry)
+      phoneNumber: getDashedPhoneNumberDisplay(contact.cell, phoneCountry),
     };
   }
+  // function to determine 
+  // if contact.is_opted_out === TRUE ? 
+  // change the body.canvassContext.phone object to include smsOptInStatus param with "O" value : 
+  // use original body.canvassContext.phone
 
   if (vanPhoneId) {
     body.canvassContext.phoneId = vanPhoneId;
