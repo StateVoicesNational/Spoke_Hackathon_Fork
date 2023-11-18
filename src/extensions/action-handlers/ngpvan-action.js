@@ -73,15 +73,19 @@ export const postCanvassResponse = async (contact, organization, bodyInput) => {
     // target this
     console.log("postCanvassResponse-contact", contact)
     console.log('cacheable data', cacheableData)
-    body.canvassContext.phone = {
-      dialingPrefix: getCountryCode(contact.cell, phoneCountry).toString(),
-      phoneNumber: getDashedPhoneNumberDisplay(contact.cell, phoneCountry),
-    };
+    if (contact.is_opted_out) {
+      body.canvassContext.phone = {
+        dialingPrefix: getCountryCode(contact.cell, phoneCountry).toString(),
+        phoneNumber: getDashedPhoneNumberDisplay(contact.cell, phoneCountry),
+        smsOptInStatus: "O"
+      };
+    } else {
+      body.canvassContext.phone = {
+        dialingPrefix: getCountryCode(contact.cell, phoneCountry).toString(),
+        phoneNumber: getDashedPhoneNumberDisplay(contact.cell, phoneCountry),
+      };
+    }
   }
-  // function to determine 
-  // if contact.is_opted_out === TRUE ? 
-  // change the body.canvassContext.phone object to include smsOptInStatus param with "O" value : 
-  // use original body.canvassContext.phone
 
   if (vanPhoneId) {
     body.canvassContext.phoneId = vanPhoneId;
