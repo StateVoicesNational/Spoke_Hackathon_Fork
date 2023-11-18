@@ -97,7 +97,6 @@ class Home extends React.Component {
     }
     return (
       <div>
-        
       <div className={css(styles.container)}>
         <div className={css(styles.logoDiv)}>
           <img
@@ -107,17 +106,10 @@ class Home extends React.Component {
         </div>
         <div className={css(styles.content)}>{this.renderContent()}</div>
       </div>
-  
-          {/* <Link id="login" href="/login" onClick={this.handleOrgInviteClick}> 
-            Get started here!
-          </Link> */}
         <Login/> 
       </div>
     );
   }
-
-  
-
 }
 
 Home.propTypes = {
