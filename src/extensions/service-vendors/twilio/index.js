@@ -827,6 +827,20 @@ async function buyNumber(
   opts = {},
   messageServiceSid
 ) {
+
+  /*
+  add check for shortcodes at the top of the buy numbers function
+  */
+
+  const shortcoderesponse = await twilioInstance.shortCodes.list({});
+  if (shortcoderesponse.error){
+    throw new Error(`Could not get shortcodes from Twilio: ${shortcoderesponse.error}`);
+  }
+
+  console.log(shortcoderesponse);
+
+  /*actual phone number handling*/ 
+
   const response = await twilioInstance.incomingPhoneNumbers.create({
     phoneNumber,
     friendlyName: `Managed by Spoke [${process.env.BASE_URL}]: ${phoneNumber}`,
