@@ -73,6 +73,7 @@ export const postCanvassResponse = async (contact, organization, bodyInput) => {
     // target this
     console.log("postCanvassResponse-contact", contact)
     console.log('cacheable data', cacheableData)
+    
     if (contact.is_opted_out) {
       body.canvassContext.phone = {
         dialingPrefix: getCountryCode(contact.cell, phoneCountry).toString(),
