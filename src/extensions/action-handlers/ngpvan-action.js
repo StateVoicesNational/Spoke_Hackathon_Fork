@@ -6,6 +6,7 @@ import {
 } from "../../lib/phone-format";
 import httpRequest from "../../server/lib/http-request.js";
 import { cacheableData } from "../../../server/models";
+import { van_api_optout_post } from "../message-handlers/ngpvan/van_opt_out_api_post";
 
 export const name = "ngpvan-action";
 
@@ -44,6 +45,9 @@ export function clientChoiceDataCacheKey() {
 export const postCanvassResponse = async (contact, organization, bodyInput) => {
   let vanId;
   let vanPhoneId;
+
+  van_api_optout_post(contact)
+
   try {
     const customFields = JSON.parse(contact.custom_fields || "{}");
     vanId = customFields.VanID || customFields.vanid;
