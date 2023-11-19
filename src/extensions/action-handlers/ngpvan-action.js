@@ -74,6 +74,7 @@ export const postCanvassResponse = async (contact, organization, bodyInput) => {
       body.canvassContext.phone = {
         dialingPrefix: getCountryCode(contact.cell, phoneCountry).toString(),
         phoneNumber: getDashedPhoneNumberDisplay(contact.cell, phoneCountry),
+        smsOptInStatus: "O"
       };
   }
 

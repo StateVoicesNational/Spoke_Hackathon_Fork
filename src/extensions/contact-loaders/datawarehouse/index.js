@@ -237,6 +237,7 @@ export async function loadContactsFromDataWarehouseFragment(job, jobEvent) {
       );
       const contact = {
         campaign_id: jobEvent.campaignId,
+        is_opted_out: row.is_opted_out || "",
         first_name: row.first_name || "",
         last_name: row.last_name || "",
         cell: formatCell,
