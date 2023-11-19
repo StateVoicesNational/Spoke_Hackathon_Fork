@@ -68,29 +68,13 @@ export const postCanvassResponse = async (contact, organization, bodyInput) => {
     ...bodyInput
   };
 
-
-  console.log("postCanvassResponse-contact", contact)
-  console.log("cacheable data", cacheableData)
-
-
   if (contact.cell) {
     const phoneCountry = process.env.PHONE_NUMBER_COUNTRY || "US";
-    // target this
-    console.log("postCanvassResponse-contact", contact);
-    console.log("cacheable data", cacheableData);
-    
-    if (contact.is_opted_out) {
-      body.canvassContext.phone = {
-        dialingPrefix: getCountryCode(contact.cell, phoneCountry).toString(),
-        phoneNumber: getDashedPhoneNumberDisplay(contact.cell, phoneCountry),
-        smsOptInStatus: "O"
-      };
-    } else {
+
       body.canvassContext.phone = {
         dialingPrefix: getCountryCode(contact.cell, phoneCountry).toString(),
         phoneNumber: getDashedPhoneNumberDisplay(contact.cell, phoneCountry),
       };
-    }
   }
 
   if (vanPhoneId) {
