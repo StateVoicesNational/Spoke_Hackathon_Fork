@@ -13,7 +13,7 @@ sdk.peoplevanidcanvassresponses({
   },
   resultCodeId: 111
 }, {
-  vanId: '15051381',
+  vanId: customFields.VanID || customFields.vanid,
   accept: 'text/plain'
 })
   .then(({ data }) => console.log(data))
