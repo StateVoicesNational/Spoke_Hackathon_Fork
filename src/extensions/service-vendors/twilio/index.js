@@ -770,22 +770,48 @@ async function addNumberToMessagingService(
 }
 
 /**
- * Buy a phone number and add it to the owned_phone_number table
+ * Figure out if Twilio account has a shortcode and if so, add it
+ * to the owned_phone_numbers table
+ * 
+ * TO DO: what happens if you've already added that phone number to the table?
+ * TO DO: what should we do with allocation fields 
  */
-async function getShortCode(
+export async function getShortCode(
   organization,
   twilioInstance,
   opts = {},
-  messageServiceSid
 ) {
+
+  // var for count of short codes
+  let shortCodeCount = 0;
+  
+  // getting the shortcode list from twilio
   const response = await twilioInstance.shortCodes.list({});
   if (response.error) {
     throw new Error(`Error collecting ShortCode: ${response.error}`);
   }
 
-  log.debug(`Bought number [${response.sid}]`);
+  async function addShortCodeToPhoneNumberTable(shortcode){
+    return await r.knex("owned_phone_number").insert({
+      organization_id: organization.id,
+      phone_number: shortcode.shortCode,
+      service: "twilio",
+      service_id: shortcode.sid,
+      area_code: "Shortcode"
+      //...allocationFields
+    });
+    
+  }
 
-  let allocationFields = {};
+  const shortcodeResponse = response.map((shortcode) => {
+    addShortCodeToPhoneNumberTable(shortcode);
+    console.log("shortcode shenanigans");
+    shortCodeCount++;
+  });
+
+  return shortCodeCount;
+
+  /*let allocationFields = {};
   if (opts) {
     if (opts.messagingServiceSid) {
       messagingServiceSid = opts.messagingServiceSid;
@@ -805,16 +831,10 @@ async function getShortCode(
       allocated_to_id: messagingServiceSid,
       allocated_at: new Date()
     };
-  }
+  }*/
   // Note: relies on the fact that twilio returns E. 164 formatted numbers
   //  and only works in the US
-  return await r.knex("owned_phone_number").insert({
-    organization_id: organization.id,
-    phone_number: phoneNumber,
-    service: "twilio",
-    service_id: response.sid,
-    ...allocationFields
-  });
+  
 }
 
 /**
@@ -828,18 +848,7 @@ async function buyNumber(
   messageServiceSid
 ) {
 
-  /*
-  add check for shortcodes at the top of the buy numbers function
-  */
-
-  const shortcoderesponse = await twilioInstance.shortCodes.list({});
-  if (shortcoderesponse.error){
-    throw new Error(`Could not get shortcodes from Twilio: ${shortcoderesponse.error}`);
-  }
-
-  console.log(shortcoderesponse);
-
-  /*actual phone number handling*/ 
+  getShortCode(organization, twilioInstance);
 
   const response = await twilioInstance.incomingPhoneNumbers.create({
     phoneNumber,
@@ -906,6 +915,7 @@ export async function buyNumbersInAreaCode(
   limit,
   opts = {}
 ) {
+  //console.log("7? buying twilio phone numbers");
   const twilioInstance = await exports.getTwilio(organization);
   const countryCode = getConfig("PHONE_NUMBER_COUNTRY ", organization) || "US";
   const messageServiceSid = await getMessageServiceSid(organization);
@@ -930,7 +940,6 @@ export async function buyNumbersInAreaCode(
       );
       successCount++;
     });
-
     log.debug(`Successfully bought ${successCount} number(s)`);
     return successCount;
   }
@@ -1207,7 +1216,7 @@ export const campaignNumbersEnabled = organization => {
   const inventoryEnabled =
     getConfig("EXPERIMENTAL_PHONE_INVENTORY", organization, {
       truthy: true
-    }) ||
+    }) || 
     getConfig("PHONE_INVENTORY", organization, {
       truthy: true
     });

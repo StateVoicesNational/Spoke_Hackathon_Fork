@@ -1,4 +1,5 @@
 function getJobRunner() {
+  console.log("3 Getting job runner in getJobRunner extensions/job-runners/index.js");
   const name = process.env.JOB_RUNNER || "legacy";
   let runner;
   try {

@@ -15,6 +15,7 @@ import {
   fixOrgless,
   clearOldJobs,
   importScript,
+  getShortCodes,
   buyPhoneNumbers,
   deletePhoneNumbers,
   startCampaign,
@@ -44,7 +45,8 @@ export const Jobs = Object.freeze({
   BUY_PHONE_NUMBERS: "buy_phone_numbers",
   DELETE_PHONE_NUMBERS: "delete_phone_numbers",
   START_CAMPAIGN: "start_campaign",
-  EXTENSION_JOB: "extension_job"
+  EXTENSION_JOB: "extension_job",
+  GET_SHORT_CODES: "get_short_codes"
 });
 
 const jobMap = Object.freeze({
@@ -52,12 +54,14 @@ const jobMap = Object.freeze({
   [Jobs.ASSIGN_TEXTERS]: assignTexters,
   [Jobs.IMPORT_SCRIPT]: importScript,
   [Jobs.BUY_PHONE_NUMBERS]: buyPhoneNumbers,
+  [Jobs.GET_SHORT_CODES]: getShortCodes,
   [Jobs.DELETE_PHONE_NUMBERS]: deletePhoneNumbers,
   [Jobs.START_CAMPAIGN]: startCampaign,
   [Jobs.EXTENSION_JOB]: extensionJob
 });
 
 export const invokeJobFunction = async job => {
+  console.log("5 run invokeJobFunction in workers/job-processes.js");
   if (job.job_type in jobMap) {
     await jobMap[job.job_type](job);
   } else if (job.job_type.startsWith("ingest.")) {
@@ -73,7 +77,6 @@ export async function processJobs() {
     return;
   }
   setupUserNotificationObservers();
-  console.log("Running processJobs");
   // eslint-disable-next-line no-constant-condition
   while (true) {
     try {

@@ -10,12 +10,12 @@ import {
 import { jobRunner } from "../../../extensions/job-runners";
 import { Jobs } from "../../../workers/job-processes";
 
-export const buyPhoneNumbers = async (
+export const getShortCodes = async (
   _,
-  { organizationId, areaCode, limit },
+  { organizationId },
   { user }
 ) => {
-  console.log("2 buyPhoneNumbers in mutations/buyPhoneNumbers.js");
+  console.log("2 getShortcodes in mutations/getShortCodes.js");
   await accessRequired(user, organizationId, "ADMIN");
   const organization = await cacheableData.organization.load(organizationId);
   if (
@@ -28,32 +28,30 @@ export const buyPhoneNumbers = async (
   }
   const serviceName = getServiceNameFromOrganization(organization);
   const service = getServiceFromOrganization(organization);
-  if (!service || !service.hasOwnProperty("buyNumbersInAreaCode")) {
+  console.log(service);
+  console.log(service.hasOwnProperty("getShortCode"));
+  if (!service || !service.hasOwnProperty("getShortCode")) {
     throw new Error(
-      `Service ${serviceName} does not support phone number buying`
+      `Service ${serviceName} does not support checking for Short Codes`
     );
   }
   const opts = {};
   const serviceManagerResult = await processServiceManagers(
-    "onBuyPhoneNumbers",
+    "onGetShortcodes",
     organization,
     {
       user,
       serviceName,
-      areaCode,
-      limit,
       opts
     }
   );
 
   return await jobRunner.dispatchJob({
-    queue_name: `${organizationId}:buy_phone_numbers`,
+    queue_name: `${organizationId}:get_short_codes`,
     organization_id: organizationId,
-    job_type: Jobs.BUY_PHONE_NUMBERS,
+    job_type: Jobs.GET_SHORT_CODES,
     locks_queue: false,
     payload: JSON.stringify({
-      areaCode: serviceManagerResult.areaCode || areaCode,
-      limit: serviceManagerResult.limit || limit,
       opts: serviceManagerResult.opts || opts
     })
   });

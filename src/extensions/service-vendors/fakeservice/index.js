@@ -134,6 +134,7 @@ export async function handleIncomingMessage(message) {
 
 export async function buyNumbersInAreaCode(organization, areaCode, limit) {
   const rows = [];
+  console.log("7? buying fake phone numbers");
   for (let i = 0; i < limit; i++) {
     const last4 = limit.toString().padStart(4, "0");
     rows.push({

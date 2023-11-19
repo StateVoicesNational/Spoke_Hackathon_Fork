@@ -14,6 +14,7 @@ export const dispatchJob = async (
   { queue_name, locks_queue, job_type, organization_id, campaign_id, payload },
   opts = {}
 ) => {
+  console.log("4 Running legacy job runner in extensions/job-runners/legacy.js");
   const job = await saveJob(
     {
       assigned: JOBS_SAME_PROCESS,
