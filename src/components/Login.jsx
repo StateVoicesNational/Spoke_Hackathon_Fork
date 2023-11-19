@@ -109,7 +109,7 @@ class Login extends React.Component {
           <img
             src="https://s3-us-west-1.amazonaws.com/spoke-public/spoke_logo.svg"
             className={css(this.styles.logoImg)}
-            width={150}
+            width={125}
           />
         </div>
         <div className={css(this.styles.header)}>
