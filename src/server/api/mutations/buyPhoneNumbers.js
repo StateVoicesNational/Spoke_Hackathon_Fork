@@ -15,7 +15,6 @@ export const buyPhoneNumbers = async (
   { organizationId, areaCode, limit },
   { user }
 ) => {
-  console.log("2 buyPhoneNumbers in mutations/buyPhoneNumbers.js");
   await accessRequired(user, organizationId, "ADMIN");
   const organization = await cacheableData.organization.load(organizationId);
   if (

@@ -1344,8 +1344,6 @@ export async function getShortCodes(job) {
     );
     log.info(`Collected ${totalPurchased} shortcode(s)`, {
       status: "COMPLETE",
-      areaCode,
-      limit,
       totalPurchased,
       organization_id: job.organization_id
     });

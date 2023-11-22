@@ -41,6 +41,7 @@ export function getServiceManagers(organization) {
       );
     }
   });
+
   return handlers;
 }
 
@@ -64,6 +65,7 @@ export async function processServiceManagers(
       typeof m[funcName] === "function" &&
       (!specificServiceManagerName || m.name === specificServiceManagerName)
   );
+
   const serviceManagerData = {};
   // Explicitly process these in order in case the order matters
   // Current serviceManagerData state is passed along, so a later serviceManager

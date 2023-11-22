@@ -15,7 +15,6 @@ export const getShortCodes = async (
   { organizationId },
   { user }
 ) => {
-  console.log("2 getShortcodes in mutations/getShortCodes.js");
   await accessRequired(user, organizationId, "ADMIN");
   const organization = await cacheableData.organization.load(organizationId);
   if (
@@ -28,8 +27,6 @@ export const getShortCodes = async (
   }
   const serviceName = getServiceNameFromOrganization(organization);
   const service = getServiceFromOrganization(organization);
-  console.log(service);
-  console.log(service.hasOwnProperty("getShortCode"));
   if (!service || !service.hasOwnProperty("getShortCode")) {
     throw new Error(
       `Service ${serviceName} does not support checking for Short Codes`

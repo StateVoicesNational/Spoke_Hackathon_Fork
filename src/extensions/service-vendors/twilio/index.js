@@ -778,7 +778,6 @@ async function addNumberToMessagingService(
  */
 export async function getShortCode(
   organization,
-  twilioInstance,
   opts = {},
 ) {
 
@@ -786,11 +785,15 @@ export async function getShortCode(
   let shortCodeCount = 0;
   
   // getting the shortcode list from twilio
-  const response = await twilioInstance.shortCodes.list({});
+  const twilioInstance = await exports.getTwilio(organization);
+  const response = await twilioInstance.shortCodes.list();
+
+  // throw error if we get a bad response
   if (response.error) {
     throw new Error(`Error collecting ShortCode: ${response.error}`);
   }
 
+  // add each shortcode to the table
   async function addShortCodeToPhoneNumberTable(shortcode){
     return await r.knex("owned_phone_number").insert({
       organization_id: organization.id,
@@ -803,12 +806,14 @@ export async function getShortCode(
     
   }
 
-  const shortcodeResponse = response.map((shortcode) => {
+  // for each response, add it to the table
+  const shortcodeResponse = response.map(shortcode => {
     addShortCodeToPhoneNumberTable(shortcode);
     console.log("shortcode shenanigans");
     shortCodeCount++;
   });
 
+  // return the count of short codes
   return shortCodeCount;
 
   /*let allocationFields = {};
@@ -847,9 +852,6 @@ async function buyNumber(
   opts = {},
   messageServiceSid
 ) {
-
-  getShortCode(organization, twilioInstance);
-
   const response = await twilioInstance.incomingPhoneNumbers.create({
     phoneNumber,
     friendlyName: `Managed by Spoke [${process.env.BASE_URL}]: ${phoneNumber}`,

@@ -61,7 +61,6 @@ const jobMap = Object.freeze({
 });
 
 export const invokeJobFunction = async job => {
-  console.log("5 run invokeJobFunction in workers/job-processes.js");
   if (job.job_type in jobMap) {
     await jobMap[job.job_type](job);
   } else if (job.job_type.startsWith("ingest.")) {

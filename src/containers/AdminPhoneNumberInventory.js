@@ -114,7 +114,6 @@ class AdminPhoneNumberInventory extends React.Component {
   };
 
   handleBuyNumbersSubmit = async () => {
-    console.log("1 AdminPhoneNumberInventory.js")
     const { areaCode, limit } = this.state.buyNumbersFormValues;
     await this.props.mutations.buyPhoneNumbers(areaCode, limit);
 
@@ -474,7 +473,7 @@ const queries = {
 };
 
 const mutations = {
-  buyPhoneNumbers: ownProps => () => ({
+  getShortCodes: ownProps => () => ({
     mutation: gql`
       mutation getShortCodes(
         $organizationId: ID!
@@ -488,6 +487,29 @@ const mutations = {
     `,
     variables: {
       organizationId: ownProps.params.organizationId,
+    },
+    refetchQueries: () => ["getOrganizationData"]
+  }),
+  buyPhoneNumbers: ownProps => (areaCode, limit) => ({
+    mutation: gql`
+      mutation buyPhoneNumbers(
+        $organizationId: ID!
+        $areaCode: String!
+        $limit: Int!
+      ) {
+        buyPhoneNumbers(
+          organizationId: $organizationId
+          areaCode: $areaCode
+          limit: $limit
+        ) {
+          id
+        }
+      }
+    `,
+    variables: {
+      organizationId: ownProps.params.organizationId,
+      areaCode,
+      limit
     },
     refetchQueries: () => ["getOrganizationData"]
   }),
