@@ -69,13 +69,22 @@ const layouts = {
 };
 
 const components = {
-  floatingButton: {
+  buyPhoneNumberButton: {
     margin: 0,
     top: "auto",
     right: 20,
     bottom: 20,
     left: "auto",
-    position: "fixed"
+    /* Here I made a change******************************** */
+    // position: "fixed"
+  },
+  checkShortCodesButton: {
+    margin: 0,
+    top: "auto",
+    right: 20,
+    bottom: 20,
+    left: "auto",
+    // color: "white"
   },
   logoDiv: {
     margin: "50 auto",

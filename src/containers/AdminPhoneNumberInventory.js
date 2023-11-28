@@ -382,25 +382,31 @@ class AdminPhoneNumberInventory extends React.Component {
         />
 
         {this.props.params.ownerPerms ? (
-          <Fab
+          // <Fab
+          <Button
             {...dataTest("buyPhoneNumbers")}
             color="primary"
-            style={theme.components.floatingButton}
+            variant="contained"
+            type="button"
+            style={theme.components.buyPhoneNumbersButton}
             onClick={this.handleBuyNumbersOpen}
           >
-            <AddIcon />
-          </Fab>
+            Buy Phone Numbers
+          </Button>
         ) : null}
 
+
         {this.props.params.ownerPerms ? (
-          <Fab
+          <Button
             {...dataTest("buyPhoneNumbers")}
             color="primary"
-            style={theme.components.floatingButton}
+            variant="contained"
+            type="button"
+            style={theme.components.checkShortCodesButton}
             onClick={this.handleGetShortcodes}
           >
-            <AddIcon />
-          </Fab>
+            Check for Short Codes
+          </Button>
         ) : null}
 
         <Dialog
