@@ -65,6 +65,11 @@ const layouts = {
     marginLeft: "auto",
     marginRight: "auto",
     textAlign: "center"
+  },
+  buttons: {
+    display: "flex",
+    justifyContent: "space-evenly",
+    marginTop: 20
   }
 };
 
@@ -75,16 +80,15 @@ const components = {
     right: 20,
     bottom: 20,
     left: "auto",
-    /* Here I made a change******************************** */
-    // position: "fixed"
+    position: "inherit"
   },
   checkShortCodesButton: {
-    margin: 0,
+    marginLeft: 0,
     top: "auto",
     right: 20,
     bottom: 20,
     left: "auto",
-    // color: "white"
+    position: "inherit"
   },
   logoDiv: {
     margin: "50 auto",

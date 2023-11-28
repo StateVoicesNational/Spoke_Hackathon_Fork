@@ -380,35 +380,36 @@ class AdminPhoneNumberInventory extends React.Component {
           columns={this.tableColumns()}
           options={options}
         />
+        <div
+          style={theme.layouts.buttons}
+        >
+          {this.props.params.ownerPerms ? (
+            // <Fab
+            <Button
+              {...dataTest("buyPhoneNumbers")}
+              color="primary"
+              variant="contained"
+              type="button"
+              style={theme.components.buyPhoneNumbersButton}
+              onClick={this.handleBuyNumbersOpen}
+            >
+              Buy Phone Numbers
+            </Button>
+          ) : null}
 
-        {this.props.params.ownerPerms ? (
-          // <Fab
-          <Button
-            {...dataTest("buyPhoneNumbers")}
-            color="primary"
-            variant="contained"
-            type="button"
-            style={theme.components.buyPhoneNumbersButton}
-            onClick={this.handleBuyNumbersOpen}
-          >
-            Buy Phone Numbers
-          </Button>
-        ) : null}
-
-
-        {this.props.params.ownerPerms ? (
-          <Button
-            {...dataTest("buyPhoneNumbers")}
-            color="primary"
-            variant="contained"
-            type="button"
-            style={theme.components.checkShortCodesButton}
-            onClick={this.handleGetShortcodes}
-          >
-            Check for Short Codes
-          </Button>
-        ) : null}
-
+          {this.props.params.ownerPerms ? (
+            <Button
+              {...dataTest("buyPhoneNumbers")}
+              color="primary"
+              variant="contained"
+              type="button"
+              style={theme.components.checkShortCodesButton}
+              onClick={this.handleGetShortcodes}
+            >
+              Check for Short Codes
+            </Button>
+          ) : null}
+        </div>
         <Dialog
           open={this.state.buyNumbersDialogOpen}
           onClose={this.handleBuyNumbersCancel}
