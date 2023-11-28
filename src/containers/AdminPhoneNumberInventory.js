@@ -126,6 +126,10 @@ class AdminPhoneNumberInventory extends React.Component {
     });
   };
 
+  handleGetShortcodes = async () => {
+    await this.props.mutations.getShortCodes();
+  };
+
   handleDeleteNumbersOpen = ([areaCode, , , availableCount]) => {
     this.setState({
       deleteNumbersDialogOpen: true,
@@ -383,6 +387,17 @@ class AdminPhoneNumberInventory extends React.Component {
             color="primary"
             style={theme.components.floatingButton}
             onClick={this.handleBuyNumbersOpen}
+          >
+            <AddIcon />
+          </Fab>
+        ) : null}
+
+        {this.props.params.ownerPerms ? (
+          <Fab
+            {...dataTest("buyPhoneNumbers")}
+            color="primary"
+            style={theme.components.floatingButton}
+            onClick={this.handleGetShortcodes}
           >
             <AddIcon />
           </Fab>
