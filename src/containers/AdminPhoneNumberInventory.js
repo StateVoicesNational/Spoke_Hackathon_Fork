@@ -418,9 +418,7 @@ class AdminPhoneNumberInventory extends React.Component {
             </Button>
           ) : null}
         </div>
-        <p 
-          style={{color:"red"}}
-        >
+        <p>
           {this.state.queriedShortcodes ? (
                `This service has ${this.numShortcodes} shortcodes.`
           ) : null}
