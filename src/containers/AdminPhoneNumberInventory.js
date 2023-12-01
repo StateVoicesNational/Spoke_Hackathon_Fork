@@ -67,7 +67,8 @@ class AdminPhoneNumberInventory extends React.Component {
       sortCol: "state",
       sortOrder: "asc",
       filters: {},
-      deleteNumbersDialogOpen: false
+      deleteNumbersDialogOpen: false,
+      queriedShortcodes: false
     };
   }
 
@@ -127,6 +128,9 @@ class AdminPhoneNumberInventory extends React.Component {
   };
 
   handleGetShortcodes = async () => {
+    this.setState({
+      queriedShortcodes: true
+    });
     await this.props.mutations.getShortCodes();
   };
 
@@ -335,6 +339,10 @@ class AdminPhoneNumberInventory extends React.Component {
       tableData = tableData.filter(data => data.state === filters.state);
     }
 
+    if (this.state.queriedShortcodes){
+      this.numShortcodes = ownedAreaCodes.filter(j => ownedAreaCodes.indexOf('Shortcode') === -1).length
+    }
+
     this.sortTable(tableData, this.state.sortCol, this.state.sortOrder);
     const handleSortOrderChange = (key, order) => {
       this.setState({
@@ -410,6 +418,13 @@ class AdminPhoneNumberInventory extends React.Component {
             </Button>
           ) : null}
         </div>
+        <p 
+          style={{color:"red"}}
+        >
+          {this.state.queriedShortcodes ? (
+               `This service has ${this.numShortcodes} shortcodes.`
+          ) : null}
+        </p>
         <Dialog
           open={this.state.buyNumbersDialogOpen}
           onClose={this.handleBuyNumbersCancel}
