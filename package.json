@@ -162,6 +162,7 @@
     "thinky": "^2.3.3",
     "timezonecomplete": "^5.5.0",
     "twilio": "^3.40.0",
+    "typescript": "^5.3.2",
     "url-join": "^4.0.1",
     "us-area-codes": "^1.0.0",
     "uuid": "^9.0.0",
